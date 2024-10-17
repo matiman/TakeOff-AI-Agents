@@ -101,8 +101,6 @@ ${notepad}
       console.log("AI:", message.content);
       conversationHistory.push({ role: "assistant", content: message.content });
     }
-
-    console.log(conversationHistory);
   }
 
   rl.close();

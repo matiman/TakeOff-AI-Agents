@@ -57,8 +57,7 @@ async function main() {
 You have a notepad that you can write to to keep track of information about the user.
 
 Here is your notepad:
-${fs.existsSync(notepadPath) ? fs.readFileSync(notepadPath, "utf-8") : ""}
-`;
+${fs.existsSync(notepadPath) ? fs.readFileSync(notepadPath, "utf-8") : ""}`;
 
     conversationHistory.push({ role: "user", content: userInput });
 
@@ -104,8 +103,6 @@ ${fs.existsSync(notepadPath) ? fs.readFileSync(notepadPath, "utf-8") : ""}
       console.log("AI:", message.content);
       conversationHistory.push({ role: "assistant", content: message.content });
     }
-
-    console.log(conversationHistory);
   }
 
   rl.close();

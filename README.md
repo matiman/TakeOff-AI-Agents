@@ -1,3 +1,3 @@
-# TypeScript Starter
+# Takeoff AI Agents Course
 
-A basic TypeScript starter project using the OpenAI API as a basic example.
+Make sure to run `git pull origin main` to get the latest changes.

@@ -9,17 +9,17 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-export async function generateEmbedding(text: string) {
+export async function generateEmbeddings(texts: string[]) {
   try {
     const response = await openai.embeddings.create({
       model: EMBEDDING_MODEL,
       dimensions: 256,
-      input: text
+      input: texts
     });
 
-    return response.data[0].embedding;
+    return response.data.map((item) => item.embedding);
   } catch (error) {
-    console.error("Error generating embedding:", error);
+    console.error("Error generating embeddings:", error);
     throw error;
   }
 }

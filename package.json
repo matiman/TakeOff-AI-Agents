@@ -1,7 +1,7 @@
 {
-  "name": "typescript-starter",
+  "name": "takeoff-ai-agents-course",
   "version": "1.0.0",
-  "description": "",
+  "description": "Takeoff AI Agents Course",
   "main": "index.js",
   "scripts": {
     "intro": "tsx sections/intro/index.ts",
