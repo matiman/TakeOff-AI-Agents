@@ -1,17 +1,23 @@
 {
-  "type": "module",
   "name": "typescript-starter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx index.ts"
+    "intro": "tsx sections/intro/index.ts",
+    "memory": "tsx sections/memory/index.ts",
+    "tools": "tsx sections/tools/index.ts",
+    "planning": "tsx sections/planning/index.ts",
+    "loops": "tsx sections/loops/index.ts",
+    "multiagents": "tsx sections/multiagents/index.ts",
+    "integrations": "tsx sections/integrations/index.ts"
   },
   "author": "Mckay Wrigley",
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^16.4.5",
-    "openai": "^4.38.2",
-    "tsx": "^4.9.0"
+    "gpt-tokenizer": "^2.5.0",
+    "openai": "^4.68.0",
+    "tsx": "^4.19.1"
   }
 }

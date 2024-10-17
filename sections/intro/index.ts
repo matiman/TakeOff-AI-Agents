@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import OpenAI from "openai";
 
-config();
+config({ path: ".env.local" });
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -9,7 +9,7 @@ const openai = new OpenAI({
 
 async function main() {
   const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o-mini",
     messages: [
       { role: "system", content: "You are a helpful assistant." },
       { role: "user", content: "Hello!" }
