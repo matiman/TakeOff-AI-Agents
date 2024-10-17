@@ -16,8 +16,11 @@
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.22.1",
+    "drizzle-orm": "^0.31.0",
     "gpt-tokenizer": "^2.5.0",
     "openai": "^4.68.0",
+    "postgres": "^3.4.4",
     "tsx": "^4.19.1"
   }
 }
