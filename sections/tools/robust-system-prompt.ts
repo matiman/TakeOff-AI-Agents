@@ -14,15 +14,15 @@ const MOCK_CONTENT: {
   date: string;
 }[] = [
   {
-    content: "I am a test content",
+    content: "Mars has the largest volcano in the solar system, Olympus Mons, which is about 13.6 miles high.",
     date: "2024-10-01"
   },
   {
-    content: "I am a test content",
+    content: "A day on Mars is about 40 minutes longer than a day on Earth.",
     date: "2024-10-02"
   },
   {
-    content: "I am a test content",
+    content: "Mars has two moons, Phobos and Deimos, which are believed to be captured asteroids.",
     date: "2024-10-03"
   }
 ];
@@ -45,7 +45,7 @@ async function main() {
           properties: {
             date: {
               type: "string",
-              description: "The date to get the content for. Example: 2024-02-29"
+              description: "The date to get the content for. Example: 2024-10-01"
             }
           },
           required: ["date"]
@@ -66,7 +66,7 @@ async function main() {
             },
             date: {
               type: "string",
-              description: "The date to add the content for. Example: 2024-02-29"
+              description: "The date to add the content for. Example: 2024-10-01"
             }
           },
           required: ["content", "date"]
