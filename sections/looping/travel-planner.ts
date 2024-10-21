@@ -386,7 +386,7 @@ const restaurants: Restaurant[] = [
 ];
 
 // Define tools (functions) that the AI can use for travel planning
-const travelTools: ChatCompletionTool[] = [
+const mainTools: ChatCompletionTool[] = [
   {
     type: "function",
     function: {
@@ -402,7 +402,11 @@ const travelTools: ChatCompletionTool[] = [
         required: ["destination", "budget", "tripLength"]
       }
     }
-  },
+  }
+];
+
+// Define tools (functions) that the AI can use for travel planning
+const planTripTools: ChatCompletionTool[] = [
   {
     type: "function",
     function: {
@@ -473,6 +477,21 @@ const travelTools: ChatCompletionTool[] = [
         required: ["totalCost", "budget"]
       }
     }
+  },
+  {
+    type: "function",
+    function: {
+      name: "isTripPlanned",
+      description: "Check if the trip is fully planned (including being within budget). Include a simple financial breakdown of the trip at the end of the final itinerary.",
+      parameters: {
+        type: "object",
+        properties: {
+          isPlanned: { type: "boolean", description: "Whether the trip is fully planned" },
+          finalItinerary: { type: "string", description: "The final itinerary of the trip" }
+        },
+        required: ["isPlanned", "finalItinerary"]
+      }
+    }
   }
 ];
 
@@ -539,8 +558,7 @@ async function main() {
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: conversationHistory,
-        tools: travelTools,
-        tool_choice: "auto"
+        tools: mainTools
       });
 
       const message = response.choices[0].message;
@@ -581,6 +599,7 @@ async function planTrip(destination: string, budget: number, tripLength: number)
 
   const MAX_ITERATIONS = 10;
   let iterations = 0;
+  let finalItinerary = "";
 
   while (iterations < MAX_ITERATIONS) {
     logWithColor(`Iteration ${iterations + 1}/${MAX_ITERATIONS}`, YELLOW);
@@ -588,7 +607,7 @@ async function planTrip(destination: string, budget: number, tripLength: number)
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: planningHistory,
-      tools: travelTools.filter((tool) => tool.function.name !== "planTrip"),
+      tools: planTripTools,
       tool_choice: "auto"
     });
 
@@ -598,29 +617,24 @@ async function planTrip(destination: string, budget: number, tripLength: number)
     const message = response.choices[0].message;
 
     if (message.tool_calls) {
-      const toolResults = await Promise.all(
-        message.tool_calls.map(async (toolCall) => {
-          try {
-            const args = JSON.parse(toolCall.function.arguments);
-            const result = await executeFunction(toolCall.function.name, args);
-            return {
-              role: "tool" as const,
-              content: JSON.stringify(result),
-              tool_call_id: toolCall.id
-            };
-          } catch (error) {
-            console.error(`Error executing function ${toolCall.function.name}:`, error);
-            return {
-              role: "tool" as const,
-              content: JSON.stringify({ error: "Failed to execute function" }),
-              tool_call_id: toolCall.id
-            };
-          }
-        })
-      );
-      planningHistory.push(message, ...toolResults);
+      planningHistory.push({ role: "assistant", content: message.content, tool_calls: message.tool_calls });
+
+      for (const toolCall of message.tool_calls) {
+        const args = JSON.parse(toolCall.function.arguments);
+        const result = await executeFunction(toolCall.function.name, args);
+
+        planningHistory.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: JSON.stringify(result)
+        });
+
+        if (toolCall.function.name === "isTripPlanned" && result.isPlanned) {
+          return result.finalItinerary; // Return the final itinerary from the function result
+        }
+      }
     } else {
-      return message.content || "Failed to generate a trip plan.";
+      planningHistory.push(message);
     }
 
     iterations++;
@@ -656,6 +670,12 @@ async function executeFunction(name: string, args: any): Promise<any> {
         difference: args.budget - args.totalCost,
         totalCost: args.totalCost,
         budget: args.budget
+      };
+      break;
+    case "isTripPlanned":
+      result = {
+        isPlanned: args.isPlanned,
+        finalItinerary: args.finalItinerary
       };
       break;
     default:
