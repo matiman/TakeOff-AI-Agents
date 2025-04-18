@@ -25,7 +25,7 @@ async function main() {
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a helpful assistant." },
+        { role: "system", content: "You are a helpful assistant. Matty is my last name!" },
         { role: "user", content: userInput }
       ]
     });
