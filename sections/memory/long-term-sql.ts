@@ -70,6 +70,7 @@ async function main() {
   };
 
   const handleToolCalls = async (message: OpenAI.Chat.Completions.ChatCompletionMessage) => {
+    console.log(`tools count: ${message.tool_calls?.length}`);
     for (const toolCall of message.tool_calls) {
       const args = JSON.parse(toolCall.function.arguments);
       let result: any;

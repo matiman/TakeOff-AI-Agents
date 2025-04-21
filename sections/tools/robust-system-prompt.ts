@@ -56,13 +56,13 @@ async function main() {
       type: "function",
       function: {
         name: "addStorage",
-        description: "Add content to the storage.",
+        description: "Add content to the storage only if its about Mars.",
         parameters: {
           type: "object",
           properties: {
             content: {
               type: "string",
-              description: "The content to add to the storage."
+              description: "The content to add to the storage. Only add content if its about Mars."
             },
             date: {
               type: "string",
