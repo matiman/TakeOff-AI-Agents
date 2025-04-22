@@ -3,7 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { customersTable } from "./schema/customers-schema";
 import { memoriesTable } from "./schema/memories-schema";
-
+import { deliveryTable } from "./schema/delivery-schema";
 config({ path: ".env.local" });
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -15,7 +15,8 @@ if (!databaseUrl) {
 const dbSchema = {
   // Tables
   memories: memoriesTable,
-  customers: customersTable
+  customers: customersTable,
+  delivery: deliveryTable
 };
 
 function initializeDb(url: string) {

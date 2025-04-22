@@ -1,6 +1,6 @@
 {
-  "id": "d18b27a9-8920-47d1-b762-4d0116d86d90",
-  "prevId": "6c5f3174-3133-4b3e-b896-13c8b9f62f42",
+  "id": "fb625777-4e73-42a4-ab3a-9dfafbe32a16",
+  "prevId": "d18b27a9-8920-47d1-b762-4d0116d86d90",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -76,15 +76,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "is_refunded": {
-          "name": "is_refunded",
+        "is_rejected": {
+          "name": "is_rejected",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
         },
-        "refund_reason": {
-          "name": "refund_reason",
+        "rejected_reason": {
+          "name": "rejected_reason",
           "type": "text",
           "primaryKey": false,
           "notNull": false
