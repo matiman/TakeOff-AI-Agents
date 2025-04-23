@@ -391,7 +391,7 @@ const mainTools: ChatCompletionTool[] = [
     type: "function",
     function: {
       name: "planTrip",
-      description: "Plan a trip based on destination, budget, and trip length",
+      description: "Plan a trip based on destination, budget, and trip length. Don't continue planning a trip if the budget can't cover flights. No need to iterate to hotels and other functions if the budget can't cover flights.",
       parameters: {
         type: "object",
         properties: {
