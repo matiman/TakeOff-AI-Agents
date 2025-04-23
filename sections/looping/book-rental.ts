@@ -321,7 +321,7 @@ const checkBookTools: ChatCompletionTool[] = [
     type: "function",
     function: {
       name: "checkUserEligibility",
-      description: "Check if a user is eligible to borrow a book. User must have no more than 1 book borrowed at a time. User's zip code must match the zip code of the library.",
+      description: "Check if a user is eligible to borrow a book and User must have no more than 1 book borrowed at a time. User's zip code must match the zip code of the library.",
       parameters: {
         type: "object",
         properties: {
